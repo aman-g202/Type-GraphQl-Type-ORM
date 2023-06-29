@@ -1,0 +1,106 @@
+===================ADD PORTFOLIO===================
+
+fragment SuccessResponse on IResponse {
+  message
+  statusCode
+  responseCode
+}
+
+mutation AddPortfolio($data: AddPortfolioInput!) {
+  addPortfolio(data: $data) {
+    ...SuccessResponse
+  }
+}
+
+Variables: 
+{
+  "data": {
+    "name": "DRAFT",
+    "url": "api/draft/v1",
+    "versionType": "V1",
+    "userId": 4
+  },
+}
+
+=================ADD PAGE TO PORTFOLIO===============
+
+mutation AddPage($data: AddPageInput!) {
+  addPage(data: $data) {
+    message
+    statusCode
+    responseCode
+  }
+}
+
+Variables: 
+{
+  "data": {
+    "name": "page3",
+    "portfolioId": 1,
+  }
+}
+
+=====================LIST ALL PORTFOLIOS==================
+
+fragment SuccessResponse on IResponse {
+  message
+  statusCode
+  responseCode
+}
+
+query ListPortfolios {
+  listPortfolios {
+    ...SuccessResponse
+    result {
+      id
+      name
+      url
+      versionType
+      userId
+    }
+  }
+}
+
+==================CREATE SNAPSHOT PORTFOLIO FROM DRAFT PORTFOLIO====================
+
+fragment SuccessResponse on IResponse {
+  message
+  statusCode
+  responseCode
+}
+
+mutation CreateSnapshotPortfolio($userId: Int!, $versionType: String!) {
+  createSnapshotPortfolio(userId: $userId, versionType: $versionType) {
+    ...SuccessResponse
+  }
+}
+
+Variables:
+{
+  "userId": 4,
+  "versionType": "V1"
+}
+
+===================LIST PAGES BY PORTFOLIO======================
+
+query ListPagesByPortfolio($portFolioId: Float!) {
+  listPagesByPortfolio(portFolioId: $portFolioId) {
+    message
+    statusCode
+    responseCode
+    result {
+      id
+      name
+      url
+      portfolio {
+        id
+        name
+      }
+    }
+  }
+}
+
+Variables:
+{
+  "portFolioId": 1
+}
